@@ -36,8 +36,9 @@ body {
 .art {
   position: absolute;
   inset: 0;
-  filter: blur(26px);
+  filter: blur(var(--blur, 26px));
   transform: scale(1.2);
+  transition: filter 1s linear;
   background:
     radial-gradient(circle at 25% 70%, #ffb347 0 20%, transparent 21%),
     radial-gradient(circle at 75% 30%, #fff2a8 0 22%, transparent 23%),
@@ -68,6 +69,10 @@ body {
 
 .timer .colon {
   margin-top: -6px;
+}
+
+.btn[hidden] {
+  display: none;
 }
 
 .buttons {
