@@ -49,8 +49,16 @@ var MET_API = "https://collectionapi.metmuseum.org/public/collection";
 var painting = null;    // the one painting (image and details) for this session
 var paintingToken = 0;  // lets us ignore an old answer if a newer painting was asked for
 
+function sleep(ms) {
+  return new Promise(function (resolve) { setTimeout(resolve, ms); });
+}
+
+// Asks the Met for something. If the Met refuses (for example "403"), this fails.
 function getJson(url) {
-  return fetch(url).then(function (r) { return r.json(); });
+  return fetch(url).then(function (r) {
+    if (!r.ok) throw new Error("The Met said " + r.status);
+    return r.json();
+  });
 }
 
 function shuffle(list) {
@@ -67,28 +75,36 @@ function usable(o) {
     (o.primaryImageSmall || o.primaryImage);
 }
 
-// Looks at a few records at the same time and returns the first usable one.
-function firstUsable(ids) {
-  return Promise.all(ids.map(function (id) {
-    return getJson(MET_API + "/v1/objects/" + id).catch(function () { return null; });
-  })).then(function (records) {
-    return records.filter(usable)[0] || null;
-  });
-}
-
-async function pickPainting() {
-  var search = MET_API + "/v1.1/search?hasImages=true&medium=Paintings";
-  var info = await getJson(search + "&limit=1");
-  var maxOffset = Math.max(0, Math.min(info.total, 10000) - 50);
-  while (true) {
-    var offset = Math.floor(Math.random() * (maxOffset + 1));
-    var list = await getJson(search + "&limit=50&offset=" + offset);
-    var ids = shuffle(list.objectIDs || []);
-    for (var i = 0; i < ids.length; i += 8) {
-      var found = await firstUsable(ids.slice(i, i + 8));
-      if (found) return found;
+// Asks the Met gently: one painting at a time, with a short pause between requests.
+// If the Met says no, wait a little and try again. Gives up only if a newer painting was asked for.
+async function pickPainting(token) {
+  var search = MET_API + "/v1.1/search?hasImages=true&medium=Paintings&departmentId=11"; // 11 = European Paintings
+  var total = 0;
+  var waitMs = 1000;
+  while (token === paintingToken) {
+    try {
+      if (!total) total = (await getJson(search + "&limit=1")).total;
+      var maxOffset = Math.max(0, Math.min(total, 10000) - 50);
+      var offset = Math.floor(Math.random() * (maxOffset + 1));
+      var list = await getJson(search + "&limit=50&offset=" + offset);
+      var ids = shuffle(list.objectIDs || []);
+      for (var i = 0; i < ids.length; i++) {
+        if (token !== paintingToken) return null;
+        await sleep(150);
+        try {
+          var record = await getJson(MET_API + "/v1/objects/" + ids[i]);
+          if (usable(record)) return record;
+        } catch (e) {
+          await sleep(waitMs); // the Met said no to this one: pause, then go on to the next
+        }
+      }
+      waitMs = 1000;
+    } catch (e) {
+      await sleep(waitMs); // the Met said no to the list: wait longer each time, up to 5 seconds
+      waitMs = Math.min(waitMs + 1000, 5000);
     }
   }
+  return null;
 }
 
 function loadPainting() {
@@ -97,8 +113,8 @@ function loadPainting() {
   frameEl.classList.remove("loaded");
   artEl.removeAttribute("src");
   tileOrder = shuffle(tileEls.map(function (el, i) { return i; }));
-  pickPainting().then(function (o) {
-    if (token !== paintingToken) return;
+  pickPainting(token).then(function (o) {
+    if (!o || token !== paintingToken) return;
     // Image and details come from this same record.
     painting = {
       image: o.primaryImageSmall || o.primaryImage,
