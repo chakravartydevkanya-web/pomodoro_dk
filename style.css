@@ -7,7 +7,7 @@ body {
   min-height: 100vh;
   font-family: Georgia, "Times New Roman", serif;
   color: #16324f;
-  background: #cfeaff;
+  background: #ffe01a;
 }
 
 .app {
@@ -30,7 +30,7 @@ body {
   background: #000;
   border: 14px solid #fff;
   border-radius: 6px;
-  box-shadow: 0 10px 24px rgba(22, 50, 79, 0.3);
+  box-shadow: 0 10px 24px rgba(120, 90, 0, 0.35);
 }
 
 .art {
@@ -45,30 +45,29 @@ body {
     linear-gradient(160deg, #ffcf5c, #ff8a1f 55%, #4aa3df);
 }
 
-.ring {
-  width: 190px;
-  aspect-ratio: 1;
-  position: relative;
-  display: grid;
-  place-items: center;
-}
-
-.ring::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: #fff;
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #000 calc(100% - 12px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #000 calc(100% - 12px));
-}
-
-.ring span {
-  position: relative;
-  font-size: 44px;
-  font-weight: bold;
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 300px;
+  height: 130px;
+  border-radius: 30px;
+  font-family: "Arial Black", Arial, Helvetica, sans-serif;
+  font-size: 64px;
+  font-weight: 900;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+  color: #fff;
+  text-shadow: 0 4px 0 rgba(120, 20, 0, 0.25), 0 8px 14px rgba(120, 20, 0, 0.35);
+  background: linear-gradient(100deg, #e5232d 0%, #f0612a 45%, #f6a21e 100%);
+  box-shadow:
+    inset 0 6px 10px rgba(255, 255, 255, 0.35),
+    inset 0 -8px 14px rgba(120, 20, 0, 0.25),
+    0 14px 24px rgba(150, 50, 0, 0.35);
+}
+
+.timer .colon {
+  margin-top: -6px;
 }
 
 .buttons {
@@ -105,12 +104,11 @@ body {
     aspect-ratio: 4 / 5;
   }
 
-  .ring {
-    width: 160px;
-  }
-
-  .ring span {
-    font-size: 36px;
+  .timer {
+    width: 260px;
+    height: 110px;
+    font-size: 52px;
+    border-radius: 26px;
   }
 
   .btn {
