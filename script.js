@@ -78,7 +78,7 @@ function usable(o) {
 // Asks the Met gently: one painting at a time, with a short pause between requests.
 // If the Met says no, wait a little and try again. Gives up only if a newer painting was asked for.
 async function pickPainting(token) {
-  var search = MET_API + "/v1.1/search?hasImages=true&medium=Paintings";
+  var search = MET_API + "/v1.1/search?hasImages=true&medium=Paintings&departmentId=11"; // 11 = European Paintings
   var total = 0;
   var waitMs = 1000;
   while (token === paintingToken) {
