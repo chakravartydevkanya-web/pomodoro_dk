@@ -7,7 +7,31 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Pomodoro Art</h1>
+  <main class="app">
+    <div class="row">
+      <div class="art-wrap">
+        <div class="stage">
+          <div class="frame" id="frame">
+            <img class="art" id="art" alt="A painting from the Met Museum">
+            <div class="tiles" id="tiles"></div>
+          </div>
+        </div>
+      </div>
+      <aside class="panel" id="panel" hidden>
+        <p class="tag">You found it!</p>
+        <h2 id="painting-title"></h2>
+        <p class="by" id="painting-artist"></p>
+        <p class="meta" id="painting-year"></p>
+        <a id="painting-link" target="_blank" rel="noopener">Learn more on the Met Museum website</a>
+      </aside>
+    </div>
+    <div class="timer" role="timer" aria-label="0 minutes 30 seconds"><span id="minutes">00</span><span class="colon">:</span><span id="seconds">30</span></div>
+    <div class="buttons">
+      <button class="btn" id="main-btn" type="button">Start</button>
+      <button class="btn alt" id="reset-btn" type="button">Reset</button>
+      <button class="btn" id="restart-btn" type="button" hidden>Restart session</button>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

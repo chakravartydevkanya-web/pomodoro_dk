@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup: Neon Arcade</title>
+<style>:root{
+--page:#1b0b3a;--ink:#f4eaff;--font:"Courier New",Courier,monospace;
+--bg:#2a0f5c;--ring:#b6ff3c;--track:#4a2397;--ring-inner:#2a0f5c;--thick:20px;--link:#2ff3ff;
+--art-radius:18px;
+--art:radial-gradient(circle at 30% 35%,#ff2fb8 0 18%,transparent 19%),radial-gradient(circle at 70% 65%,#2ff3ff 0 22%,transparent 23%),radial-gradient(circle at 45% 80%,#b6ff3c 0 12%,transparent 13%),linear-gradient(135deg,#5b1fb8,#12062e);
+--btn-bg:#b6ff3c;--btn-ink:#1b0b3a;--btn-border:0;--btn-shadow:0 0 18px rgba(182,255,60,.7);
+--btn2-bg:transparent;--btn2-ink:#2ff3ff}
+.btn.alt{border:3px solid #2ff3ff;box-shadow:0 0 14px rgba(47,243,255,.6)}
+.art-wrap{border:4px solid #2ff3ff;box-shadow:0 0 26px #2ff3ff,0 0 60px rgba(255,47,184,.5)}
+.ring{box-shadow:0 0 26px rgba(182,255,60,.45)}
+.ring span{text-shadow:0 0 14px #b6ff3c}
+.panel{background:#12062e;border:3px solid #ff2fb8;border-radius:16px;padding:22px;box-shadow:0 0 22px rgba(255,47,184,.6)}
+.panel h3{text-transform:uppercase;letter-spacing:.04em}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font);padding:24px 16px 56px}
+.intro{max-width:1040px;margin:0 auto 28px}
+.intro h1{margin:0 0 6px;font-size:28px}
+.intro p{margin:0;opacity:.75}
+h2.group{max-width:1040px;margin:36px auto 14px;font-size:20px}
+.label{max-width:1040px;margin:18px auto 8px;font-size:14px;font-weight:bold;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.phones{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}
+.phones .cell{width:340px}
+.phones .label{margin:0 0 8px}
+
+.laptop{max-width:1040px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25);border:1px solid rgba(0,0,0,.2)}
+.bar{height:30px;background:#d9d9de;display:flex;align-items:center;gap:7px;padding:0 12px}
+.bar i{width:11px;height:11px;border-radius:50%;background:#aaa}
+.phone{border:10px solid #1c1c22;border-radius:38px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+
+.screen{container-type:inline-size;background:var(--bg)}
+.app{display:flex;flex-direction:column;align-items:center;gap:26px;padding:32px 32px 40px}
+.row{display:grid;grid-template-columns:1fr 400px 1fr;gap:32px;width:100%;align-items:center}
+.row .art-wrap{grid-column:2}
+.panel{grid-column:3;display:none}
+.finished .panel{display:block}
+.art-wrap{width:100%;aspect-ratio:5/4;overflow:hidden;position:relative;background:#000;border-radius:var(--art-radius)}
+.art{position:absolute;inset:0;background:var(--art);filter:blur(var(--blur));transform:scale(1.2)}
+.finished .art{transform:scale(1)}
+.ready{--blur:26px;--p:0}
+.running{--blur:14px;--p:40}
+.finished{--blur:0px;--p:100}
+.ring{width:190px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;
+ background:conic-gradient(var(--ring) calc(var(--p)*1%),var(--track) 0)}
+.ring::before{content:"";position:absolute;inset:var(--thick);border-radius:50%;background:var(--ring-inner)}
+.ring span{position:relative;font-size:44px;font-weight:bold;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.buttons{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.btn{border-radius:999px;padding:14px 34px;font-size:18px;font-weight:bold;font-family:inherit;border:var(--btn-border);
+ background:var(--btn-bg);color:var(--btn-ink);box-shadow:var(--btn-shadow)}
+.btn.alt{background:var(--btn2-bg);color:var(--btn2-ink)}
+.panel h3{margin:0 0 4px;font-size:24px}
+.panel .by{margin:0;font-size:16px}
+.panel .tag{font-size:12px;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:var(--ring)}
+.panel .meta{margin:10px 0 14px;font-size:15px;opacity:.85}
+.panel a{display:inline-block;font-weight:bold;color:var(--link);text-decoration:underline}
+
+@container (max-width:760px){
+ .app{padding:22px 18px 30px;gap:20px}
+ .row{grid-template-columns:1fr;gap:18px}
+ .row .art-wrap,.panel{grid-column:1}
+ .art-wrap{aspect-ratio:4/5}
+ .ring{width:160px}
+ .ring span{font-size:36px}
+ .btn{padding:13px 26px;font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="intro"><h1>Neon Arcade</h1><p>Deep purple with glowing lime, cyan and magenta, like a game screen. Design only: buttons do nothing and the painting is a placeholder.</p></div>
+<h2 class="group">On a laptop</h2>
+<div class="label">Before starting</div><div class="laptop"><div class="bar"><i></i><i></i><i></i></div><div class="screen ready"><div class="app">
+ <div class="row">
+  <div class="art-wrap"><div class="art"></div></div>
+  <aside class="panel">
+   <p class="tag">You found it!</p>
+   <h3>Sunflowers</h3>
+   <p class="by">Vincent van Gogh</p>
+   <p class="meta">Painted in 1887</p>
+   <a href="#">Read about this painting</a>
+  </aside>
+ </div>
+ <div class="ring"><span>25:00</span></div>
+ <div class="buttons"><span class="btn">Start</span><span class="btn alt">Reset</span></div>
+</div></div></div>
+<div class="label">Timer running</div><div class="laptop"><div class="bar"><i></i><i></i><i></i></div><div class="screen running"><div class="app">
+ <div class="row">
+  <div class="art-wrap"><div class="art"></div></div>
+  <aside class="panel">
+   <p class="tag">You found it!</p>
+   <h3>Sunflowers</h3>
+   <p class="by">Vincent van Gogh</p>
+   <p class="meta">Painted in 1887</p>
+   <a href="#">Read about this painting</a>
+  </aside>
+ </div>
+ <div class="ring"><span>15:00</span></div>
+ <div class="buttons"><span class="btn">Pause</span><span class="btn alt">Reset</span></div>
+</div></div></div>
+<div class="label">Timer finished</div><div class="laptop"><div class="bar"><i></i><i></i><i></i></div><div class="screen finished"><div class="app">
+ <div class="row">
+  <div class="art-wrap"><div class="art"></div></div>
+  <aside class="panel">
+   <p class="tag">You found it!</p>
+   <h3>Sunflowers</h3>
+   <p class="by">Vincent van Gogh</p>
+   <p class="meta">Painted in 1887</p>
+   <a href="#">Read about this painting</a>
+  </aside>
+ </div>
+ <div class="ring"><span>00:00</span></div>
+ <div class="buttons"><span class="btn">Restart session</span></div>
+</div></div></div>
+
+<h2 class="group">On a phone</h2>
+<div class="phones">
+<div class="cell"><div class="label">Before starting</div><div class="phone"><div class="screen ready"><div class="app">
+ <div class="row">
+  <div class="art-wrap"><div class="art"></div></div>
+  <aside class="panel">
+   <p class="tag">You found it!</p>
+   <h3>Sunflowers</h3>
+   <p class="by">Vincent van Gogh</p>
+   <p class="meta">Painted in 1887</p>
+   <a href="#">Read about this painting</a>
+  </aside>
+ </div>
+ <div class="ring"><span>25:00</span></div>
+ <div class="buttons"><span class="btn">Start</span><span class="btn alt">Reset</span></div>
+</div></div></div></div>
+<div class="cell"><div class="label">Timer running</div><div class="phone"><div class="screen running"><div class="app">
+ <div class="row">
+  <div class="art-wrap"><div class="art"></div></div>
+  <aside class="panel">
+   <p class="tag">You found it!</p>
+   <h3>Sunflowers</h3>
+   <p class="by">Vincent van Gogh</p>
+   <p class="meta">Painted in 1887</p>
+   <a href="#">Read about this painting</a>
+  </aside>
+ </div>
+ <div class="ring"><span>15:00</span></div>
+ <div class="buttons"><span class="btn">Pause</span><span class="btn alt">Reset</span></div>
+</div></div></div></div>
+<div class="cell"><div class="label">Timer finished</div><div class="phone"><div class="screen finished"><div class="app">
+ <div class="row">
+  <div class="art-wrap"><div class="art"></div></div>
+  <aside class="panel">
+   <p class="tag">You found it!</p>
+   <h3>Sunflowers</h3>
+   <p class="by">Vincent van Gogh</p>
+   <p class="meta">Painted in 1887</p>
+   <a href="#">Read about this painting</a>
+  </aside>
+ </div>
+ <div class="ring"><span>00:00</span></div>
+ <div class="buttons"><span class="btn">Restart session</span></div>
+</div></div></div></div>
+</div>
+</body>
+</html>

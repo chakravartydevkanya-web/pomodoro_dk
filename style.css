@@ -1,8 +1,239 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #16324f;
+  background: #8fe3d8;
+}
+
+.app {
+  min-height: 100vh;
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  padding: 32px 32px 40px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 416px 1fr;
+  gap: 32px;
+  width: 100%;
+  align-items: center;
+}
+
+.panel {
+  grid-column: 3;
+  background: #fffbe8;
+  padding: 22px;
+  border-radius: 4px 22px 4px 22px;
+  box-shadow: 0 8px 18px rgba(10, 80, 75, 0.3);
+  transform: rotate(1.5deg);
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.panel .tag {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff8a1f;
+}
+
+.panel h2 {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-style: italic;
+  overflow-wrap: anywhere;
+}
+
+.panel .by {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+}
+
+.panel .meta {
+  margin: 10px 0 14px;
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+.panel a {
+  font-weight: bold;
+  color: #c25a00;
+  text-decoration: underline;
+}
+
+.art-wrap {
+  grid-column: 2;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border: 14px solid #fff;
+  border-radius: 6px;
+  box-shadow: 0 10px 24px rgba(10, 80, 75, 0.35);
+}
+
+/* The whole painting fits inside the box: no stretching, no cutting off. */
+.art-wrap {
+  container-type: size;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* The frame has exactly the painting's shape, so the 3 x 3 tiles line up with it. */
+.frame {
+  --ratio: 5 / 4;
+  position: relative;
+  width: min(100cqw, 100cqh * var(--ratio));
+  aspect-ratio: var(--ratio);
+  visibility: hidden;
+}
+
+.frame.loaded {
+  visibility: visible;
+}
+
+.art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tiles {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.tile {
+  background: linear-gradient(135deg, #ffcf5c, #ff8a1f);
+  box-shadow: inset 0 0 0 2px #fff;
+  transition: opacity 1s ease;
+}
+
+.tile.gone {
+  opacity: 0;
+}
+
+.timer {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: sans-serif;
+  gap: 14px;
+  width: 300px;
+  height: 130px;
+  border-radius: 30px;
+  font-family: "Arial Black", Arial, Helvetica, sans-serif;
+  font-size: 64px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  text-shadow: 0 4px 0 rgba(120, 20, 0, 0.25), 0 8px 14px rgba(120, 20, 0, 0.35);
+  background: linear-gradient(100deg, #e5232d 0%, #f0612a 45%, #f6a21e 100%);
+  box-shadow:
+    inset 0 6px 10px rgba(255, 255, 255, 0.35),
+    inset 0 -8px 14px rgba(120, 20, 0, 0.25),
+    0 14px 24px rgba(150, 50, 0, 0.35);
+}
+
+.timer .colon {
+  margin-top: -6px;
+}
+
+.btn[hidden] {
+  display: none;
+}
+
+.buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 16px 38px;
+  font-family: "Arial Black", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(100deg, #e5232d 0%, #f0612a 50%, #f6a21e 100%);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.4),
+    0 6px 0 #b3361c,
+    0 12px 18px rgba(150, 50, 0, 0.3);
+}
+
+.btn.alt {
+  color: #e8542a;
+  background: #fff;
+  border: 3px solid #f6a21e;
+  padding: 13px 35px;
+  box-shadow:
+    0 6px 0 #d9d2c4,
+    0 12px 18px rgba(10, 80, 75, 0.2);
+}
+
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .art-wrap,
+  .panel {
+    grid-column: 1;
+  }
+
+  .app {
+    gap: 20px;
+    padding: 22px 18px 30px;
+  }
+
+  .art-wrap {
+    aspect-ratio: 4 / 5;
+  }
+
+  .timer {
+    width: 260px;
+    height: 110px;
+    font-size: 52px;
+    border-radius: 26px;
+  }
+
+  .btn {
+    padding: 14px 30px;
+    font-size: 17px;
+  }
+
+  .btn.alt {
+    padding: 11px 27px;
+  }
 }
