@@ -56,15 +56,18 @@ body {
   margin: 0 0 4px;
   font-size: 24px;
   font-style: italic;
+  overflow-wrap: anywhere;
 }
 
 .panel .by {
   margin: 0;
+  overflow-wrap: anywhere;
   font-size: 16px;
 }
 
 .panel .meta {
   margin: 10px 0 14px;
+  overflow-wrap: anywhere;
   font-size: 15px;
   opacity: 0.85;
 }
@@ -81,23 +84,25 @@ body {
   aspect-ratio: 5 / 4;
   position: relative;
   overflow: hidden;
-  background: #000;
+  background: #fff;
   border: 14px solid #fff;
   border-radius: 6px;
   box-shadow: 0 10px 24px rgba(10, 80, 75, 0.35);
 }
 
+/* The whole painting fits inside the box: no stretching, no cutting off. */
 .art {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   filter: blur(var(--blur, 26px));
-  transform: scale(1.2);
   transition: filter 1s linear;
-  background:
-    radial-gradient(circle at 25% 70%, #ffb347 0 20%, transparent 21%),
-    radial-gradient(circle at 75% 30%, #fff2a8 0 22%, transparent 23%),
-    radial-gradient(circle at 55% 55%, #4aa3df 0 14%, transparent 15%),
-    linear-gradient(160deg, #ffcf5c, #ff8a1f 55%, #4aa3df);
+}
+
+.art:not([src]) {
+  visibility: hidden;
 }
 
 .timer {

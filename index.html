@@ -10,14 +10,14 @@
   <main class="app">
     <div class="row">
       <div class="art-wrap">
-        <div class="art" role="img" aria-label="Painting placeholder"></div>
+        <img class="art" id="art" alt="A painting from the Met Museum">
       </div>
       <aside class="panel" id="panel" hidden>
         <p class="tag">You found it!</p>
-        <h2>Painting name</h2>
-        <p class="by">Artist name</p>
-        <p class="meta">Year</p>
-        <a href="https://example.com" target="_blank" rel="noopener">Learn more on the Met Museum website</a>
+        <h2 id="painting-title"></h2>
+        <p class="by" id="painting-artist"></p>
+        <p class="meta" id="painting-year"></p>
+        <a id="painting-link" target="_blank" rel="noopener">Learn more on the Met Museum website</a>
       </aside>
     </div>
     <div class="timer" role="timer" aria-label="0 minutes 30 seconds"><span id="minutes">00</span><span class="colon">:</span><span id="seconds">30</span></div>
