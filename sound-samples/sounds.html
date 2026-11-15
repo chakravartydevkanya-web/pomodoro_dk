@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bell sound samples</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 24px 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #16324f;
+      background: #8fe3d8;
+    }
+    h1 { margin: 0; font-size: 28px; }
+    p { margin: 0; text-align: center; }
+    button {
+      width: 260px;
+      border: 0;
+      border-radius: 999px;
+      padding: 16px 30px;
+      font-family: "Arial Black", Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      background: linear-gradient(100deg, #e5232d 0%, #f0612a 50%, #f6a21e 100%);
+      box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.4), 0 6px 0 #b3361c, 0 12px 18px rgba(150, 50, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>Bell sounds</h1>
+  <p>Press a button to hear each sound. Turn your volume up a little.</p>
+  <button type="button" data-sound="chime">1. Soft chime</button>
+  <button type="button" data-sound="desk">2. Desk bell</button>
+  <button type="button" data-sound="gong">3. Temple gong</button>
+
+  <script>
+    // Every sound is made from simple tones (Web Audio). No sound files.
+    var ctx = null;
+
+    // One tone that starts at "start", fades in, then fades out.
+    function tone(freq, start, attack, length, volume) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(volume, start + attack);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + length);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + length + 0.05);
+    }
+
+    var sounds = {
+      // High, glassy "ting" that fades slowly (about 2.5 seconds).
+      chime: function (t) {
+        tone(1318.5, t, 0.01, 2.5, 0.35);
+        tone(1975.5, t, 0.01, 1.8, 0.18);
+        tone(2637, t, 0.01, 1.0, 0.08);
+      },
+      // Bright "ding!" with a quick hit and a short ring (about 1.6 seconds).
+      desk: function (t) {
+        tone(1760, t, 0.003, 1.6, 0.4);
+        tone(1760 * 2.76, t, 0.003, 0.9, 0.22);
+        tone(1760 * 5.4, t, 0.003, 0.4, 0.1);
+      },
+      // Deep warm tone that swells, then fades (about 3 seconds).
+      gong: function (t) {
+        tone(196, t, 0.25, 3.0, 0.5);
+        tone(196 * 2.0, t, 0.25, 2.6, 0.25);
+        tone(196 * 2.76, t, 0.2, 2.0, 0.15);
+        tone(196 * 5.4, t, 0.2, 1.2, 0.06);
+      }
+    };
+
+    document.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === "suspended") ctx.resume();
+        sounds[b.dataset.sound](ctx.currentTime + 0.02);
+      });
+    });
+  </script>
+</body>
+</html>
