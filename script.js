@@ -1,6 +1,6 @@
-// Pomodoro timer: 25 minutes, Start / Pause / Resume / Reset.
-var TOTAL_MS = 25 * 60 * 1000;
-var BLUR_START = 26; // blur (in pixels) at 25:00
+// Pomodoro timer: 30 seconds for testing (normally 25 minutes), Start / Pause / Resume / Reset.
+var TOTAL_MS = 30 * 1000;
+var BLUR_START = 26; // blur (in pixels) at the start
 var BLUR_END = 4;    // blur (in pixels) at 00:00
 
 var minutesEl = document.getElementById("minutes");
