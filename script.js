@@ -9,6 +9,8 @@ var timerEl = document.querySelector(".timer");
 var artEl = document.querySelector(".art");
 var mainBtn = document.getElementById("main-btn");
 var resetBtn = document.getElementById("reset-btn");
+var restartBtn = document.getElementById("restart-btn");
+var panelEl = document.getElementById("panel");
 
 var state = "ready"; // ready, running, paused or done
 var remainingMs = TOTAL_MS;
@@ -46,7 +48,12 @@ function tick() {
   if (remainingMs === 0) {
     state = "done";
     stopTicking();
+    // Finished: sharp painting, details and Restart session button appear.
+    artEl.style.setProperty("--blur", "0px");
     mainBtn.hidden = true;
+    resetBtn.hidden = true;
+    restartBtn.hidden = false;
+    panelEl.hidden = false;
   }
 }
 
@@ -70,14 +77,21 @@ mainBtn.addEventListener("click", function () {
   }
 });
 
-resetBtn.addEventListener("click", function () {
+// Puts the page back to how it looked before starting.
+function resetAll() {
   stopTicking();
   state = "ready";
   remainingMs = TOTAL_MS;
   mainBtn.hidden = false;
+  resetBtn.hidden = false;
+  restartBtn.hidden = true;
+  panelEl.hidden = true;
   mainBtn.textContent = "Start";
   show();
-});
+}
+
+resetBtn.addEventListener("click", resetAll);
+restartBtn.addEventListener("click", resetAll);
 
 document.addEventListener("visibilitychange", tick);
 
