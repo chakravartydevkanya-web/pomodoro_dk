@@ -53,9 +53,9 @@
 ●	The timer must stay accurate when the browser tab is in the background. 
 
 ## Design choice
-●	I chose the "Sunny Gallery" design. Its file is mockups/2-sunny-gallery.html. Follow it for the look of the app.
-●	Sky-blue background with sunshine-yellow shapes.
+●	I chose the "Sunny Gallery" design (mockups/2-sunny-gallery.html), then changed it. Follow this list for the look of the app.
+●	Background is a soft bright aqua (about #8fe3d8). No yellow shapes.
 ●	The painting is big, in the middle, in a white picture frame.
-●	The timer is a thin orange round progress ring with the time inside.
-●	Buttons are round pills.
+●	The timer is a rounded box that fades from red to orange, with big bold white numbers like "25 : 00" and a spaced-out colon. It is not a ring.
+●	Start is a round pill with the same red-to-orange glow, white text and a raised look. Reset is a white round pill with orange text and an orange outline.
 ●	Painting details show in a side panel on a laptop, and below the painting on a phone.

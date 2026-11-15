@@ -7,7 +7,7 @@ body {
   min-height: 100vh;
   font-family: Georgia, "Times New Roman", serif;
   color: #16324f;
-  background: #ffe01a;
+  background: #8fe3d8;
 }
 
 .app {
@@ -30,7 +30,7 @@ body {
   background: #000;
   border: 14px solid #fff;
   border-radius: 6px;
-  box-shadow: 0 10px 24px rgba(120, 90, 0, 0.35);
+  box-shadow: 0 10px 24px rgba(10, 80, 75, 0.35);
 }
 
 .art {
@@ -80,18 +80,26 @@ body {
 .btn {
   border: 0;
   border-radius: 999px;
-  padding: 14px 34px;
-  font-family: inherit;
+  padding: 16px 38px;
+  font-family: "Arial Black", Arial, Helvetica, sans-serif;
   font-size: 18px;
-  font-weight: bold;
-  background: #16324f;
+  font-weight: 900;
   color: #fff;
-  box-shadow: 0 4px 10px rgba(22, 50, 79, 0.3);
+  background: linear-gradient(100deg, #e5232d 0%, #f0612a 50%, #f6a21e 100%);
+  box-shadow:
+    inset 0 3px 6px rgba(255, 255, 255, 0.4),
+    0 6px 0 #b3361c,
+    0 12px 18px rgba(150, 50, 0, 0.3);
 }
 
 .btn.alt {
+  color: #e8542a;
   background: #fff;
-  color: #16324f;
+  border: 3px solid #f6a21e;
+  padding: 13px 35px;
+  box-shadow:
+    0 6px 0 #d9d2c4,
+    0 12px 18px rgba(10, 80, 75, 0.2);
 }
 
 @media (max-width: 760px) {
@@ -112,7 +120,11 @@ body {
   }
 
   .btn {
-    padding: 13px 26px;
+    padding: 14px 30px;
     font-size: 17px;
+  }
+
+  .btn.alt {
+    padding: 11px 27px;
   }
 }
