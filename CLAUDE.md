@@ -7,8 +7,8 @@
 
 ## Project 
 ●	A Pomodoro timer website. 
-●	A painting from the Met Museum starts blurred and becomes sharper as the timer runs. 
-●	At zero, the painting is fully sharp and the page shows the painting name, artist, the year, and a link to the Met Museum page for that painting.
+●	A painting from the Met Museum starts hidden behind 9 orange tiles. One random tile disappears every ninth of the timer, so the painting is slowly uncovered as the timer runs. 
+●	At zero, the whole painting is showing, a soft chime rings once, and the page shows the painting name, artist, the year, and a link to the Met Museum page for that painting.
 ●	The code lives on GitHub and the site is published on Vercel.
 
 ## How to work with me 
@@ -41,6 +41,7 @@
 ## Painting data 
 ●	Use the Met Museum's free public API. 
 ●	Only use paintings that are public domain and have an image. 
+●	Only use the Met's European Paintings department (department 11).
 ●	Take the painting title, artist, year and link from the API. Never make them up. 
 ●	If the API fails or returns no usable painting, tell me in simple words. 
 ●	Do not invent a painting.
@@ -59,3 +60,4 @@
 ●	The timer is a rounded box that fades from red to orange, with big bold white numbers like "25 : 00" and a spaced-out colon. It is not a ring.
 ●	Start is a round pill with the same red-to-orange glow, white text and a raised look. Reset is a white round pill with orange text and an orange outline.
 ●	Painting details show in a side panel on a laptop, and below the painting on a phone.
+●	The hidden painting is covered by 9 orange tiles (a 3 x 3 grid) with thin white gaps. They line up with the painting itself.
