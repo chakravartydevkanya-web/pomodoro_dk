@@ -1,12 +1,13 @@
 // Pomodoro timer: 30 seconds for testing (normally 25 minutes), Start / Pause / Resume / Reset.
 var TOTAL_MS = 30 * 1000;
-var BLUR_START = 26; // blur (in pixels) at the start
-var BLUR_END = 4;    // blur (in pixels) at 00:00
+var TILE_COUNT = 9;  // the painting is covered by 9 tiles (3 x 3)
 
 var minutesEl = document.getElementById("minutes");
 var secondsEl = document.getElementById("seconds");
 var timerEl = document.querySelector(".timer");
 var artEl = document.getElementById("art");
+var frameEl = document.getElementById("frame");
+var tilesEl = document.getElementById("tiles");
 var mainBtn = document.getElementById("main-btn");
 var resetBtn = document.getElementById("reset-btn");
 var restartBtn = document.getElementById("restart-btn");
@@ -20,6 +21,27 @@ var state = "ready"; // ready, running, paused or done
 var remainingMs = TOTAL_MS;
 var endTime = 0; // the clock time when the timer should hit 00:00
 var intervalId = null;
+
+// ---------- Tiles that uncover the painting ----------
+
+var tileEls = [];
+var tileOrder = []; // the order the tiles are uncovered in (random for each painting)
+
+for (var t = 0; t < TILE_COUNT; t++) {
+  var tile = document.createElement("div");
+  tile.className = "tile";
+  tilesEl.appendChild(tile);
+  tileEls.push(tile);
+}
+
+// Uncovers one more tile for every ninth of the time that has passed.
+function showTiles(done) {
+  var uncovered = Math.min(TILE_COUNT, Math.floor(done * TILE_COUNT + 1e-9));
+  tileEls.forEach(function (el) { el.classList.remove("gone"); });
+  for (var i = 0; i < uncovered; i++) {
+    tileEls[tileOrder[i]].classList.add("gone");
+  }
+}
 
 // ---------- Painting from the Met Museum ----------
 
@@ -72,7 +94,9 @@ async function pickPainting() {
 function loadPainting() {
   var token = ++paintingToken;
   painting = null;
+  frameEl.classList.remove("loaded");
   artEl.removeAttribute("src");
+  tileOrder = shuffle(tileEls.map(function (el, i) { return i; }));
   pickPainting().then(function (o) {
     if (token !== paintingToken) return;
     // Image and details come from this same record.
@@ -86,6 +110,12 @@ function loadPainting() {
     artEl.src = painting.image;
   });
 }
+
+// Once the image has loaded, shape the frame like the painting.
+artEl.addEventListener("load", function () {
+  frameEl.style.setProperty("--ratio", artEl.naturalWidth + " / " + artEl.naturalHeight);
+  frameEl.classList.add("loaded");
+});
 
 function showDetails() {
   if (!painting) return;
@@ -173,9 +203,7 @@ function show() {
   secondsEl.textContent = pad(s);
   timerEl.setAttribute("aria-label", m + " minutes " + s + " seconds");
 
-  var done = 1 - remainingMs / TOTAL_MS;
-  var blur = BLUR_START - (BLUR_START - BLUR_END) * done;
-  artEl.style.setProperty("--blur", blur.toFixed(1) + "px");
+  showTiles(1 - remainingMs / TOTAL_MS);
 }
 
 function stopTicking() {
@@ -192,8 +220,7 @@ function tick() {
   if (remainingMs === 0) {
     state = "done";
     stopTicking();
-    // Finished: sharp painting, details and Restart session button appear.
-    artEl.style.setProperty("--blur", "0px");
+    // Finished: the whole painting is showing; details and Restart session button appear.
     mainBtn.hidden = true;
     resetBtn.hidden = true;
     restartBtn.hidden = false;

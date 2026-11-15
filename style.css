@@ -91,18 +91,53 @@ body {
 }
 
 /* The whole painting fits inside the box: no stretching, no cutting off. */
-.art {
+.art-wrap {
+  container-type: size;
+}
+
+.stage {
   position: absolute;
   inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* The frame has exactly the painting's shape, so the 3 x 3 tiles line up with it. */
+.frame {
+  --ratio: 5 / 4;
+  position: relative;
+  width: min(100cqw, 100cqh * var(--ratio));
+  aspect-ratio: var(--ratio);
+  visibility: hidden;
+}
+
+.frame.loaded {
+  visibility: visible;
+}
+
+.art {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: blur(var(--blur, 26px));
-  transition: filter 1s linear;
 }
 
-.art:not([src]) {
-  visibility: hidden;
+.tiles {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.tile {
+  background: linear-gradient(135deg, #ffcf5c, #ff8a1f);
+  box-shadow: inset 0 0 0 2px #fff;
+  transition: opacity 1s ease;
+}
+
+.tile.gone {
+  opacity: 0;
 }
 
 .timer {
