@@ -51,3 +51,11 @@
 ●	Pause and Reset keep the same painting. Only "Restart session" loads a new one. 
 ●	Painting details (title, artist, year, link) must never appear before the timer finishes. 
 ●	The timer must stay accurate when the browser tab is in the background. 
+
+## Design choice
+●	I chose the "Sunny Gallery" design. Its file is mockups/2-sunny-gallery.html. Follow it for the look of the app.
+●	Sky-blue background with sunshine-yellow shapes.
+●	The painting is big, in the middle, in a white picture frame.
+●	The timer is a thin orange round progress ring with the time inside.
+●	Buttons are round pills.
+●	Painting details show in a side panel on a laptop, and below the painting on a phone.
